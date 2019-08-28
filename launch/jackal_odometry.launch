@@ -1,0 +1,29 @@
+<launch>
+
+	<param name="/use_sim_time" value="true"/>
+	<node name="rosbag_player" pkg="rosbag" type="play" output="screen" args="--clock /home/swarm/dataset/vicon/ekf.bag"/>
+	
+	<node pkg="tf2_ros" type="static_transform_publisher" name="3dm_imu_to_odom_ekf" args="0 0 0 3.14159 -1.5708 0 JA01_base_link JA01_imu_3dm_link" />
+	<node pkg="tf2_ros" type="static_transform_publisher" name="d435i_imu_to_odom_ekf" args="0.25 0 0  0 -0.3 0 JA01_base_link camera_d435i_link" />
+	<node pkg="tf2_ros" type="static_transform_publisher" name="world_to_vicon" args="0 0 0 0 0 0 1 world vicon" />
+
+	<node pkg="jackal_odometry" name="world_to_odomekf_tf_publisher" type="world_to_odomekf_tf_publisher.py" output="screen" />
+	<node pkg="jackal_odometry" name="vicon_path_node" type="createpath.py" output="screen" />
+	<node pkg="rviz" name="rviz" type="rviz" output="screen" />
+
+	<node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_only_wheel_encoders" output="screen">
+        <rosparam command="load" file="$(find jackal_odometry)/config/only_wheel_encoders.yaml"/>
+		<remap from="/odometry/filtered" to="odometry/only_wheel_encoders"/>
+	</node>
+
+	<node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_only_imu" output="screen">
+        <rosparam command="load" file="$(find jackal_odometry)/config/only_imu.yaml"/>
+		<remap from="/odometry/filtered" to="odometry/only_imu"/>
+	</node>
+
+	<node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_imu_encoders" output="screen">
+        <rosparam command="load" file="$(find jackal_odometry)/config/imu_encoders.yaml"/>
+		<remap from="/odometry/filtered" to="odometry/imu_encoders"/>
+	</node>
+
+</launch>

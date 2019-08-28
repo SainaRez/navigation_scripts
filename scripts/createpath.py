@@ -1,4 +1,4 @@
-#!usr/bin/env python
+#!/usr/bin/env python
 
 import rospy
 from nav_msgs.msg import Path
@@ -29,7 +29,6 @@ def create_markers(msg):
     count = count + 1
     marker.id = count
     marker_publisher.publish(marker)
-    rospy.loginfo('msg published')
 
 
 def callback(data):  

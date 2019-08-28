@@ -1,0 +1,33 @@
+print_diagnostics: true
+reset_on_time_jump: true
+two_d_mode: true
+odom_frame: odom_ekf
+world_frame: odom_ekf
+base_link_frame: JA01_base_link
+publish_tf: false
+frequency: 50
+
+odom0: /JA01/jackal_velocity_controller/odom
+odom0_differential: false
+odom0_config: [false, false, false,
+               false, false, false,
+               true, true, true,
+               false, false, true,
+               false, false, false]
+
+odom1: /vins_estimator/odometry
+odom1_differential: false
+odom1_config: [false, false, false,
+               false, false, false,
+               true, true, true,
+               false, false, true,
+               false, false, false]
+
+# imu0: /JA01/imu_3dm/data_raw
+imu0: /camera_d435i/imu
+imu0_differential: false
+imu0_config: [false, false, false,
+              true, true, true,
+              false, false, false,
+              true, true, true,
+              true, true, true]
