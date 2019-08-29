@@ -28,7 +28,9 @@ if __name__ == "__main__":
     rate = rospy.Rate(10.0)
     while not rospy.is_shutdown():
         try:
+            # tf_camera_world = tfBuffer.lookup_transform('camera_d435i_link', 'world', rospy.Time())
             tf_camera_world = tfBuffer.lookup_transform('camera_d435i_infra1_optical_frame', 'world', rospy.Time())
+            # tf_camera_world = tfBuffer.lookup_transform('JA01_base_link', 'world', rospy.Time())
             break
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
             rate.sleep()
@@ -44,10 +46,21 @@ if __name__ == "__main__":
     trans1 = [trans1_v3.x, trans1_v3.y, trans1_v3.z]
     rot1 = [rot1_v3.x, rot1_v3.y, rot1_v3.z, rot1_v3.w]
 
+    ######### added code for testing #############
+    # euler0= tf.transformations.euler_from_quaternion(rot1)
+
+    # euler0 = ((euler0[0] - (2*euler0[0])), euler0[1], euler0[2])
+    # rot1 = tf.transformations.quaternion_from_euler(euler0[0], euler0[1], euler0[2])
+
+    ###############################################
+
     trans1_mat = tf.transformations.translation_matrix(trans1)
     rot1_mat = tf.transformations.quaternion_matrix(rot1)
 
     mat1 = numpy.dot(trans1_mat, rot1_mat)
+    euler1 = tf.transformations.euler_from_quaternion(rot1)
+
+    print "euler1: ", euler1
     print "mat1", mat1
 
     # Get transformation matrix for tf_camera_world
@@ -61,14 +74,24 @@ if __name__ == "__main__":
     rot2_mat = tf.transformations.quaternion_matrix(rot2)
     
     mat2 = numpy.dot(trans2_mat, rot2_mat)
+    euler2 = tf.transformations.euler_from_quaternion(rot2)
+    print "euler2: ", euler2
     print "mat2", mat2
 
     # Get the translation and quaternion components for tf_vins_world
-    mat3_not_inv = numpy.dot(mat1, mat2)
-    mat3 = numpy.linalg.inv(mat3_not_inv)
-    trans3 = tf.transformations.translation_from_matrix(mat3)
-    rot3 = tf.transformations.quaternion_from_matrix(mat3)
+    mat3_vins_world = numpy.dot(mat1, mat2)
+    
+    mat3_world_vins = numpy.linalg.inv(mat3_vins_world)
+    trans3 = tf.transformations.translation_from_matrix(mat3_world_vins)
+    rot3 = tf.transformations.quaternion_from_matrix(mat3_world_vins)
+    euler = tf.transformations.euler_from_quaternion(rot3)
+    euler = (euler[0]- euler[0], euler[1], euler[2])
+    rot3 = tf.transformations.quaternion_from_euler(euler[0], euler[1], euler[2])
+    print 'mat3_world_vins', mat3_world_vins
     print "trans3, rot3 ", trans3, rot3
+    euler3 = tf.transformations.euler_from_quaternion(rot3)
+    print "euler3: ", euler3
+    #print "euler: ", euler
 
     # Create the transform message and send it
     tf_vins_world.header.stamp = rospy.Time.now()

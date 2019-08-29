@@ -6,7 +6,7 @@ import tf2_ros
 
 if __name__ == "__main__":
     rospy.init_node('tf2_listener')
-    vicon_file = open('vins_tf_camera_imu_2.txt','w')
+    vicon_file = open('tf_au_15_5.11.6.txt','w')
     
     tfBuffer = tf2_ros.Buffer()
     listener = tf2_ros.TransformListener(tfBuffer)

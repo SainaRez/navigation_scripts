@@ -6,7 +6,7 @@ import geometry_msgs.msg
 
 if __name__ == "__main__":
 
-    rospy.init_node('jackal_tf_publisher')
+    rospy.init_node('world_to_odomekf_tf_publisher')
     tfBuffer = tf2_ros.Buffer()
     listener = tf2_ros.TransformListener(tfBuffer)
     trans = geometry_msgs.msg.TransformStamped()
