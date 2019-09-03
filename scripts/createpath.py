@@ -13,6 +13,7 @@ from std_msgs.msg import Header, ColorRGBA
 path = Path()
 transform = Transform()
 count = 0
+vcount = 0
 
 def create_markers(msg):
     global count
@@ -22,7 +23,7 @@ def create_markers(msg):
     marker.id = 0
     marker.lifetime = rospy.Duration(1000)
     marker.pose = msg.pose
-    marker.scale = Vector3(0.009, 0.009, 0.009)
+    marker.scale = Vector3(0.02, 0.02, 0.02)
     marker.header = Header(frame_id='world')
     marker.color = ColorRGBA(5.0, 2.0, 0.0, 0.8)
 
@@ -30,6 +31,21 @@ def create_markers(msg):
     marker.id = count
     marker_publisher.publish(marker)
 
+def create_vins_markers(msg):
+    global vcount
+    marker = Marker()
+
+    marker.type = Marker.SPHERE
+    marker.id = 0
+    marker.lifetime = rospy.Duration(1000)
+    marker.pose = msg.pose
+    marker.scale = Vector3(0.02, 0.02, 0.02)
+    marker.header = Header(frame_id='world')
+    marker.color = ColorRGBA(5.0, 2.0, 0.0, 0.8)
+
+    vcount = vcount + 1
+    marker.id = vcount
+    marker_publisher.publish(marker)
 
 def callback(data):  
     global path
@@ -61,7 +77,6 @@ def world_broadcaster(msg):
 
 
 if __name__ == '__main__':
-   # rospy.init_node('world_tf_broadcaster')
     # listener = tf.TransformListener()
     # (trans,rot) = listener.lookupTransform('/world', '/vins_world', rospy.Time(0))
 
@@ -78,6 +93,12 @@ if __name__ == '__main__':
     vicon_msg = PoseStamped()
     vicon_msg = rospy.Subscriber("/JA01/world", PoseStamped, create_markers)
     rospy.sleep(0.5)
+
+    # vcount = 0
+    # vins_marker_publisher = rospy.Publisher('/vins/markers')
+    # vicon_msg = Odometry()
+    # vicon_msg = rospy.Subscriber("/vins_estimator/odometry", Odometry, create_vins_markers)
+    # rospy.sleep(0.5)
 
     # pub2 = rospy.Publisher("/tf/world", Transform, queue_size=1)
     # world_tf_msg = TFMessage()

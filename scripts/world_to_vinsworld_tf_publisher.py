@@ -19,7 +19,7 @@ if __name__ == "__main__":
     rate = rospy.Rate(10.0)
     while not rospy.is_shutdown():
         try:
-            tf_camera_vins = tfBuffer.lookup_transform('camera', 'vins_world', rospy.Time())
+            tf_camera_vins = tfBuffer.lookup_transform('vins_world', 'camera', rospy.Time())
             break
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
             rate.sleep()
@@ -46,10 +46,11 @@ if __name__ == "__main__":
     trans1 = [trans1_v3.x, trans1_v3.y, trans1_v3.z]
     rot1 = [rot1_v3.x, rot1_v3.y, rot1_v3.z, rot1_v3.w]
 
+
     ######### added code for testing #############
     # euler0= tf.transformations.euler_from_quaternion(rot1)
 
-    # euler0 = ((euler0[0] - (2*euler0[0])), euler0[1], euler0[2])
+    # euler0 = ((euler0[0] + 0.3), euler0[1] - 0.003, euler0[2])
     # rot1 = tf.transformations.quaternion_from_euler(euler0[0], euler0[1], euler0[2])
 
     ###############################################
@@ -79,6 +80,7 @@ if __name__ == "__main__":
     print "mat2", mat2
 
     # Get the translation and quaternion components for tf_vins_world
+    #mat3_world_vins = numpy.dot(numpy.linalg.inv(mat1), mat2)
     mat3_vins_world = numpy.dot(mat1, mat2)
     
     mat3_world_vins = numpy.linalg.inv(mat3_vins_world)
