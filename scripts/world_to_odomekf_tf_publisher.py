@@ -14,7 +14,7 @@ if __name__ == "__main__":
     rate = rospy.Rate(10.0)
     while not rospy.is_shutdown():
         try:
-            trans = tfBuffer.lookup_transform('world', 'JA01', rospy.Time())
+            trans = tfBuffer.lookup_transform('world', 'JA01_center', rospy.Time())
             break
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
             continue

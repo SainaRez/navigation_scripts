@@ -29,7 +29,8 @@ def create_markers(msg):
 
     count = count + 1
     marker.id = count
-    marker_publisher.publish(marker)
+    if count%10 == 0: 
+        marker_publisher.publish(marker)
 
 def create_vins_markers(msg):
     global vcount

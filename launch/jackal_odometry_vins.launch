@@ -12,13 +12,13 @@
 
     
 	<node pkg="jackal_odometry" name="world_to_odomekf_tf_publisher" type="world_to_odomekf_tf_publisher.py" output="screen" />
-	<!-- <node pkg="jackal_odometry" name="vicon_path_node" type="createpath.py" output="screen"/> -->
+	<node pkg="jackal_odometry" name="vicon_path_node" type="createpath.py" output="screen"/>
     <node pkg="jackal_odometry" name="world_to_vinsworld_tf_publisher" type="world_to_vinsworld_tf_publisher.py" output="screen" />
-    <node pkg="jackal_odometry" name="create_twiststamp" type="create_twiststamp.py" output="screen" />
+    <!-- <node pkg="jackal_odometry" name="create_twiststamp" type="create_twiststamp.py" output="screen" /> -->
 
 	
     <node pkg="rviz" name="rviz" type="rviz" output="screen" />
-    <node name="rosbag_player" pkg="rosbag" type="play" args="--clock --pause /home/swarm/dataset/vicon/ekf_aug_15_jackal_slow_2.bag"/>
+    <node name="rosbag_player" pkg="rosbag" type="play" args="-r 0.5 --clock --pause /home/swarm/dataset/vicon/ekf_aug_15_jackal_slow_2.bag"/>
 
 	<!-- <node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_only_wheel_encoders" output="screen">
         <rosparam command="load" file="$(find jackal_odometry)/config/only_wheel_encoders.yaml"/>
