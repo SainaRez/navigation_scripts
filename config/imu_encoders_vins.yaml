@@ -15,7 +15,7 @@ odom0_config: [false, false, false,
                false, false, true,
                false, false, false]
 
-imu0: /JA01/imu_3dm/data_raw
+#imu0: /JA01/imu_3dm/data_raw
 imu0: /camera_d435i/imu
 imu0_differential: false
 imu0_config: [false, false, false,
@@ -24,20 +24,24 @@ imu0_config: [false, false, false,
               true, true, true,
               false, false, false]
 
+
+### TWIST ###
+# odom1: /vins_estimator/odometry
+# odom1_differential: false
+# odom1_config: [false, false, false,
+#                false, false, false,
+#                true, true, true,
+#                true, true, true,
+#                false, false, false]
+
+### POSE ###
 odom1: /vins_estimator/odometry
 odom1_differential: false
-odom1_config: [false, false, false,
-               false, false, false,
+odom1_config: [true, true, true,
                true, true, true,
                false, false, false,
+               false, false, false,
                false, false, false]
-# odom2: /vins_estimator/odometry
-# odom2_differential: false
-# odom2_config: [true, true, true,
-#                true, true, true,
-#                true, true, true,
-#                false, false, false,
-#                false, false, false]
 
 
 # pose0: /vins_estimator/camera_pose
