@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+""" this script creats TwistSTamp messages from Odometry messages """
+
 import rospy
 from nav_msgs.msg import Path, Odometry
 from geometry_msgs.msg import PoseStamped,Vector3, Pose, Transform, TransformStamped, TwistStamped

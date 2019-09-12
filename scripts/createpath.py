@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+
+""" this script subscribes to the vicon topic and creates markers (or path messages) to visualize object's trajectory in vicon """
+
 import rospy
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped,Vector3, Pose
@@ -15,6 +18,8 @@ transform = Transform()
 count = 0
 vcount = 0
 
+
+""" callback function for marker messages """
 def create_markers(msg):
     global count
     marker = Marker()
@@ -29,26 +34,13 @@ def create_markers(msg):
 
     count = count + 1
     marker.id = count
+    # publish per 10 messages
     if count%10 == 0: 
         marker_publisher.publish(marker)
 
-def create_vins_markers(msg):
-    global vcount
-    marker = Marker()
 
-    marker.type = Marker.SPHERE
-    marker.id = 0
-    marker.lifetime = rospy.Duration(1000)
-    marker.pose = msg.pose
-    marker.scale = Vector3(0.02, 0.02, 0.02)
-    marker.header = Header(frame_id='world')
-    marker.color = ColorRGBA(5.0, 2.0, 0.0, 0.8)
-
-    vcount = vcount + 1
-    marker.id = vcount
-    marker_publisher.publish(marker)
-
-def callback(data):  
+""" callback function for path messages """
+def create_path(data):  
     global path
     pose = PoseStamped()
     pose.header = data.header
@@ -57,57 +49,21 @@ def callback(data):
     path.poses.append(pose)
     pub.publish(path)
 
-def world_broadcaster(msg):
-    global transform
-    transform.translation.x = msg.transforms[0].transform.translation.x
-    transform.translation.y = msg.transforms[0].transform.translation.y
-    transform.translation.z = msg.transforms[0].transform.translation.z
-    transform.rotation.x = msg.transforms[0].transform.rotation.x
-    transform.rotation.y = msg.transforms[0].transform.rotation.y
-    transform.rotation.z = msg.transforms[0].transform.rotation.z
-    transform.rotation.w = msg.transforms[0].transform.rotation.w
-    pub2.publish(transform)
-    
-    br = tf.TransformBroadcaster()
-    rate = rospy.Rate(1000.0)
-    br.sendTransform((msg.transforms[0].transform.translation.x, msg.transforms[0].transform.translation.y, msg.transforms[0].transform.translation.z),
-                     (msg.transforms[0].transform.rotation.x, msg.transforms[0].transform.rotation.y, msg.transforms[0].transform.rotation.z, msg.transforms[0].transform.rotation.w),
-                     rospy.Time.now(),
-                     "vins_world",
-                     "world")
-
 
 if __name__ == '__main__':
-    # listener = tf.TransformListener()
-    # (trans,rot) = listener.lookupTransform('/world', '/vins_world', rospy.Time(0))
-
-    """ Publish a path message """
+    
+    """ publish path messages """
     # rospy.init_node('vicon_path_node', anonymous=True)
     # pub = rospy.Publisher("/JA01/vicon/path", Path, queue_size=1)
     # vicon_msg = PoseStamped()
-    # vicon_msg = rospy.Subscriber("/JA01/world", PoseStamped, callback)
+    # vicon_msg = rospy.Subscriber("/JA01/world", PoseStamped, create_path)
 
-    """ Publish markers """
+    """ publish markers """
     rospy.init_node('vicon_path_node', anonymous=True)
     count = 0
     marker_publisher = rospy.Publisher('/JA01/vicon/markers', Marker, queue_size=5)
     vicon_msg = PoseStamped()
     vicon_msg = rospy.Subscriber("/JA01/world", PoseStamped, create_markers)
     rospy.sleep(0.5)
-
-    # vcount = 0
-    # vins_marker_publisher = rospy.Publisher('/vins/markers')
-    # vicon_msg = Odometry()
-    # vicon_msg = rospy.Subscriber("/vins_estimator/odometry", Odometry, create_vins_markers)
-    # rospy.sleep(0.5)
-
-    # pub2 = rospy.Publisher("/tf/world", Transform, queue_size=1)
-    # world_tf_msg = TFMessage()
-    # world_tf_msg = rospy.Subscriber("/tf_static", TFMessage, world_broadcaster)
     
     rospy.spin()
-    try:
-        while not rospy.is_shutdown():  
-            pass
-    except rospy.ROSInterruptException:
-        pass

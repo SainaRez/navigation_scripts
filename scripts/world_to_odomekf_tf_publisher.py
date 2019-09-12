@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+""" this script gets the tranform from world to Jackal's center and publishes it from world to odomekf """
+
 import rospy
 import tf2_ros
 import geometry_msgs.msg
