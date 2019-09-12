@@ -14,7 +14,6 @@
 	<node pkg="jackal_odometry" name="world_to_odomekf_tf_publisher" type="world_to_odomekf_tf_publisher.py" output="screen" />
 	<node pkg="jackal_odometry" name="vicon_path_node" type="createpath.py" output="screen"/>
     <node pkg="jackal_odometry" name="world_to_vinsworld_tf_publisher" type="world_to_vinsworld_tf_publisher.py" output="screen" />
-    <!-- <node pkg="jackal_odometry" name="create_twiststamp" type="create_twiststamp.py" output="screen" /> -->
 
 	
     <node pkg="rviz" name="rviz" type="rviz" output="screen" />
@@ -22,12 +21,12 @@
 
 	<!-- <node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_only_wheel_encoders" output="screen">
         <rosparam command="load" file="$(find jackal_odometry)/config/only_wheel_encoders.yaml"/>
-		<remap from="/odometry/filtered" to="odometry/only_wheel_encoders"/>
+		<remap from="/odometry/filtered" to="odometry/wheel_encoders_only"/>
 	</node> -->
 
 	<!-- <node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_only_imu" output="screen">
         <rosparam command="load" file="$(find jackal_odometry)/config/only_imu.yaml"/>
-		<remap from="/odometry/filtered" to="odometry/only_imu"/>
+		<remap from="/odometry/filtered" to="odometry/imu_only"/>
 	</node> -->
 
     <!-- <node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_vins_only" output="screen">
