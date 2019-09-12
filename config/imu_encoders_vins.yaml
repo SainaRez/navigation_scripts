@@ -7,6 +7,7 @@ base_link_frame: JA01_base_link
 publish_tf: true
 frequency: 50
 
+### wheel encoder ###
 odom0: /JA01/jackal_velocity_controller/odom
 odom0_differential: false
 odom0_config: [false, false, false,
@@ -15,6 +16,7 @@ odom0_config: [false, false, false,
                false, false, true,
                false, false, false]
 
+### IMU ###
 #imu0: /JA01/imu_3dm/data_raw
 imu0: /camera_d435i/imu
 imu0_differential: false
@@ -25,30 +27,21 @@ imu0_config: [false, false, false,
               false, false, false]
 
 
-### TWIST ###
+### Vins twist ###
 # odom1: /vins_estimator/odometry
 # odom1_differential: false
 # odom1_config: [false, false, false,
 #                false, false, false,
 #                true, true, true,
-#                true, true, true,
+#                true, true, tru
 #                false, false, false]
 
-### POSE ###
+### Vins pose (position only) ###
 odom1: /vins_estimator/odometry
 odom1_differential: false
 odom1_config: [true, true, true,
-               true, true, true,
+               false, false, false,
                false, false, false,
                false, false, false,
                false, false, false]
-
-
-# pose0: /vins_estimator/camera_pose
-# pose0_config: [true,  true,  true,
-#                true, true, true,
-#                false, false, false,
-#                false, false, false,
-#                false, false, false]
-# pose0_differential: false
 
