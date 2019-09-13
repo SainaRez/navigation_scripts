@@ -1,7 +1,7 @@
 ##########
 
 # README for running VIO on Jackal
-# Author: Saina Rezvani (saina.r6@gmail.com)
+# Author: Saina Rezvani (saina.r6@gmail.com, 8573338808)
 # Sept 13th, 2019
 
 ##########
@@ -66,9 +66,21 @@ Collecting data with Jackal:
 
 ##########
 
-For calibrating camera and imu refer to the Kalibr and imu_util wiki pages
-    - The D435i, T265 and 3dm intrinsic IMU calibration files can be found in the utility/imu_intrinsics folder
-    - The checkboard config/info file can be found in the utility folder
+For calibration, first the camera needs to be calibrated (instrinsic parameters) and then the camera and imu (extrinsic parameters)
+    Intrinsic calibration: 
+
+        $ kalibr_calibrate_cameras --bag [filename.bag] --topics [TOPIC_0 ... TOPIC_N] --models [MODEL_0 ... MODEL_N] --target [target.yaml]
+
+    **The checkboard config/info file can be found in the utility folder
+
+    Extrinsic calibration:
+
+        $ kalibr_calibrate_imu_camera --bag [filename.bag] --cam [camchain.yaml] --imu [imu.yaml] --target [target.yaml]
+
+    **The D435i, T265 and 3dm intrinsic IMU calibration files can be found in the utility/imu_intrinsics folder
+    **One possible error could be that the default syncronization tolarance is too low. In that case you can use the "--approx-sync" parameter with a value higher than 0.02 (default)
+
+For more information refer to the imu_util and Kalibr's wiki pages.
 
 ##########
 
@@ -100,4 +112,6 @@ Running Evo:
         $ evo_traj tum traj_1.txt traj_2.txt --ref traj_3.txt --p
 
 
-    
+###########
+
+# Link to presentation: https://docs.google.com/presentation/d/1mA3TWaiyB9V24z-W7W0Zaq33_DxgVm4Up-m9AwFyCLQ/edit?usp=sharing
