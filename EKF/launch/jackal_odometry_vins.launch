@@ -1,49 +1,51 @@
 <launch>
 
 	<param name="/use_sim_time" value="true"/>
+
+	<!-- decompress images (in: the compressed image topic, out: the new topic to publish them to) -->
 	<node name="img0_republish" type="republish" pkg="image_transport" output="screen" args="compressed in:=/camera_d435i/infra1/image_rect_raw out:=/camera_d435i/infra1/image" />
     <node name="img1_republish" type="republish" pkg="image_transport" output="screen" args="compressed in:=/camera_d435i/infra2/image_rect_raw out:=/camera_d435i/infra2/image" />
-
+	
+	<!-- Static Transform Publishers -->
 	<node pkg="tf2_ros" type="static_transform_publisher" name="threedm_imu_to_odom_ekf" args="0 0 0 3.14159 -1.5708 0 JA01_base_link JA01_imu_3dm_link" />
 	<node pkg="tf2_ros" type="static_transform_publisher" name="d435i_imu_to_odom_ekf" args="0.25 0.004 0  0 -0.3 0 JA01_base_link camera_d435i_link" />
 	<node pkg="tf2_ros" type="static_transform_publisher" name="JA01_to_JA01_center" args="-0.18 0 0 0 0 0 JA01 JA01_center" />
 	<node pkg="tf2_ros" type="static_transform_publisher" name="world_to_vicon" args="0 0 0 0 0 0 1 world vicon" />
     <node pkg="tf2_ros" type="static_transform_publisher" name="camera_link_to_optical_frame" args="0 0 0 -0.500 0.500 -0.500 0.500 camera_d435i_link camera_d435i_infra1_optical_frame" />
 
-    
+    <!-- Scripts -->
 	<node pkg="jackal_odometry" name="world_to_odomekf_tf_publisher" type="world_to_odomekf_tf_publisher.py" output="screen" />
 	<node pkg="jackal_odometry" name="vicon_path_node" type="createpath.py" output="screen"/>
     <node pkg="jackal_odometry" name="world_to_vinsworld_tf_publisher" type="world_to_vinsworld_tf_publisher.py" output="screen" />
-
 	
+	<!-- Rviz and bag file -->
     <node pkg="rviz" name="rviz" type="rviz" output="screen" />
     <node name="rosbag_player" pkg="rosbag" type="play" args="-r 0.5 --clock --pause /home/swarm/dataset/vicon/ekf_aug_15_jackal_slow_2.bag"/>
 
-	<!-- <node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_only_wheel_encoders" output="screen">
-        <rosparam command="load" file="$(find jackal_odometry)/config/only_wheel_encoders.yaml"/>
+	<!-- Config files (only one config file should have the publish_tf variable set to true)-->
+	<node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_only_wheel_encoders" output="screen">
+        <rosparam command="load" file="$(find jackal_odometry)/EKF/config/wheel_encoders_only.yaml"/>
 		<remap from="/odometry/filtered" to="odometry/wheel_encoders_only"/>
-	</node> -->
+	</node>
 
-	<!-- <node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_only_imu" output="screen">
-        <rosparam command="load" file="$(find jackal_odometry)/config/only_imu.yaml"/>
+	<node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_only_imu" output="screen">
+        <rosparam command="load" file="$(find jackal_odometry)/EKF/config/imu_only.yaml"/>
 		<remap from="/odometry/filtered" to="odometry/imu_only"/>
-	</node> -->
+	</node>
 
     <!-- <node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_vins_only" output="screen">
-        <rosparam command="load" file="$(find jackal_odometry)/config/vins_only.yaml"/>
+        <rosparam command="load" file="$(find jackal_odometry)/EKF/config/vins_only.yaml"/>
 		<remap from="/odometry/filtered" to="odometry/vins_only"/>
 	</node> -->
 
 	<node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_imu_encoders" output="screen">
-        <rosparam command="load" file="$(find jackal_odometry)/config/imu_encoders.yaml"/>
+        <rosparam command="load" file="$(find jackal_odometry)/EKF/config/imu_encoders.yaml"/>
 		<remap from="/odometry/filtered" to="odometry/imu_encoders"/>
 	</node>
 
 	<node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_imu_encoders_vins" output="screen">
-        <rosparam command="load" file="$(find jackal_odometry)/config/imu_encoders_vins.yaml"/>
+        <rosparam command="load" file="$(find jackal_odometry)/EKF/config/imu_encoders_vins.yaml"/>
 		<remap from="/odometry/filtered" to="odometry/imu_encoders_vins"/>
 	</node>
 
-
-    
 </launch>

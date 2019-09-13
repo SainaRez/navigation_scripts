@@ -12,17 +12,17 @@
 	<node pkg="rviz" name="rviz" type="rviz" output="screen" />
 
 	<node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_only_wheel_encoders" output="screen">
-        <rosparam command="load" file="$(find jackal_odometry)/config/only_wheel_encoders.yaml"/>
+        <rosparam command="load" file="$(find jackal_odometry)/EKF/config/only_wheel_encoders.yaml"/>
 		<remap from="/odometry/filtered" to="odometry/wheel_encoders_only"/>
 	</node>
 
 	<node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_only_imu" output="screen">
-        <rosparam command="load" file="$(find jackal_odometry)/config/only_imu.yaml"/>
+        <rosparam command="load" file="$(find jackal_odometry)/EKF/config/only_imu.yaml"/>
 		<remap from="/odometry/filtered" to="odometry/imu_only"/>
 	</node>
 
 	<node pkg="robot_localization" type="ekf_localization_node" name="jackal_odometry_ekf_imu_encoders" output="screen">
-        <rosparam command="load" file="$(find jackal_odometry)/config/imu_encoders.yaml"/>
+        <rosparam command="load" file="$(find jackal_odometry)/EKF/config/imu_encoders.yaml"/>
 		<remap from="/odometry/filtered" to="odometry/imu_encoders"/>
 	</node>
 
