@@ -1,0 +1,7 @@
+ORB_SLAM2 : KITTI calibration and settings files runs with our data, but loses the track very quickly. 
+Same thing happens with Euroc files.
+Euroc settings in ROS does not run with our data.
+Could not run KITTI bag file in ros either.
+
+MultiCol-SLAM : default calibration and setttings runs with our data, but loses track quicklly.
+our calibration and settings runs with our data, but cameras don't show up and tracking never happens.
