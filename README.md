@@ -93,7 +93,7 @@ Intrinsic calibration:
 
         $ kalibr_calibrate_cameras --bag [filename.bag] --topics [TOPIC_0 ... TOPIC_N] --models [MODEL_0 ... MODEL_N] --target [target.yaml]
 
-**The checkboard config/info file can be found in the [`/Utility`](./Utility) folder
+**The checkboard config/info file can be found at [`/Utility/checkboard_large.yaml`](./Utility/checkboard_large.yaml)
 
 Extrinsic calibration:
 
