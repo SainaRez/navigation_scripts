@@ -93,13 +93,13 @@ Intrinsic calibration:
 
         $ kalibr_calibrate_cameras --bag [filename.bag] --topics [TOPIC_0 ... TOPIC_N] --models [MODEL_0 ... MODEL_N] --target [target.yaml]
 
-**The checkboard config/info file can be found in the [`/utility`](./utility) folder
+**The checkboard config/info file can be found in the [`/Utility`](./Utility) folder
 
 Extrinsic calibration:
 
         $ kalibr_calibrate_imu_camera --bag [filename.bag] --cam [camchain.yaml] --imu [imu.yaml] --target [target.yaml]
 
-**The D435i, T265 and 3dm intrinsic IMU calibration files can be found in the [`/utility/imu_intrinsics`](./utility/imu_intrinsics) folder
+**The D435i, T265 and 3dm intrinsic IMU calibration files can be found in the [`/Utility/imu_intrinsics`](./Utility/imu_intrinsics) folder
 
 **One possible error could be that the default syncronization tolarance is too low. In that case you can use the "--approx-sync" parameter with a value higher than 0.02 (default)
 
@@ -120,7 +120,7 @@ Running EKF and Vins-Fusion:
     $ rosrun vins vins_node ~/catkin_ws/src/VINS-Fusion/config/realsense_d435i/realsense_stereo_imu_config_3.yaml
     $ roslaunch jackal_odometry jackal_odometry_vins.launch
 
-**The rviz config file is in the launch folder and can be uploaded into rviz
+**The rviz config file is in the rviz folder [`/EKF/rviz/ekf_config.rviz`](./EKF/rviz/ekf_config.rviz) and can be uploaded into rviz
 
 ### Visualization
 
