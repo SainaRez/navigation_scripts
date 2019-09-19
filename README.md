@@ -93,13 +93,13 @@ Intrinsic calibration:
 
         $ kalibr_calibrate_cameras --bag [filename.bag] --topics [TOPIC_0 ... TOPIC_N] --models [MODEL_0 ... MODEL_N] --target [target.yaml]
 
-**The checkboard config/info file can be found in the utility folder
+**The checkboard config/info file can be found in the [`utility`](/utility) folder
 
 Extrinsic calibration:
 
         $ kalibr_calibrate_imu_camera --bag [filename.bag] --cam [camchain.yaml] --imu [imu.yaml] --target [target.yaml]
 
-**The D435i, T265 and 3dm intrinsic IMU calibration files can be found in the utility/imu_intrinsics folder
+**The D435i, T265 and 3dm intrinsic IMU calibration files can be found in the [`/utility/imu_intrinsics`](/utility/imu_intrinsics) folder
 **One possible error could be that the default syncronization tolarance is too low. In that case you can use the "--approx-sync" parameter with a value higher than 0.02 (default)
 
 For more information refer to the imu_util and Kalibr's wiki pages.
@@ -125,13 +125,13 @@ Running EKF and Vins-Fusion:
 
 #### Evo:
 
-For running the tum format, the text files can be generated with the `/EKF/scripts/generate_txtfile_from_topic.py` and the following command: (more info on evo wiki page)
+For running the tum format, the text files can be generated with the [`/EKF/scripts/generate_txtfile_from_topic.py`](/EKF/scripts/generate_txtfile_from_topic.py) and the following command: (more info on evo wiki page)
 
         $ evo_traj tum traj_1.txt traj_2.txt --ref traj_3.txt --p
 
 #### Visualizing vicon:
 
-The script `/EKF/scripts/createpath.py` can be used to visualize the vicon trajectory in rviz
+The script [`/EKF/scripts/createpath.py`](/EKF/scripts/createpath.py) can be used to visualize the vicon trajectory in rviz
 
 
 
