@@ -107,7 +107,7 @@ For more information refer to the imu_util and Kalibr's wiki pages.
 
 ### VINS-Fusion
 
-For Running Vins-Fusion refer to the read me in the forked repo in mit-acl github repo which can also be found as a submodule in this repository [`VINS-Fusion @ 686eb75`](./VINS-Fusion @ 686eb75)
+For Running Vins-Fusion refer to the read me in the forked repo in mit-acl github repo which can also be found as a submodule in this repository [`VINS-Fusion @ 686eb75`](./VINS-Fusion@686eb75)
 
 ### EKF
 
