@@ -100,13 +100,14 @@ Extrinsic calibration:
         $ kalibr_calibrate_imu_camera --bag [filename.bag] --cam [camchain.yaml] --imu [imu.yaml] --target [target.yaml]
 
 **The D435i, T265 and 3dm intrinsic IMU calibration files can be found in the [`/utility/imu_intrinsics`](/utility/imu_intrinsics) folder
+
 **One possible error could be that the default syncronization tolarance is too low. In that case you can use the "--approx-sync" parameter with a value higher than 0.02 (default)
 
 For more information refer to the imu_util and Kalibr's wiki pages.
 
 ### VINS-Fusion
 
-For Running Vins-Fusion refer to the read me in the forked repo in mit-acl github repo which can also be found as a submodule in this repository 
+For Running Vins-Fusion refer to the read me in the forked repo in mit-acl github repo which can also be found as a submodule in this repository [`VINS-Fusion @ 686eb75`](VINS-Fusion @ 686eb75)
 
 ### EKF
 
