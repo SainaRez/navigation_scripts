@@ -125,7 +125,7 @@ Running EKF and Vins-Fusion:
 
 #### Evo:
 
-For running the tum format, the text files can be generated with the generate_txtfile_from_topic.py and the following command: (more info on evo wiki page)
+For running the tum format, the text files can be generated with the `/EKF/scripts/generate_txtfile_from_topic.py` and the following command: (more info on evo wiki page)
 
         $ evo_traj tum traj_1.txt traj_2.txt --ref traj_3.txt --p
 
